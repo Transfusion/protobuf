@@ -216,7 +216,11 @@ class PROTOBUF_EXPORT UnknownFieldSet {
 
 namespace internal {
 
-inline void WriteVarint(uint32_t num, uint64_t val, UnknownFieldSet* unknown) {
+inline void WriteVarint(uint32_t num, uint64_t val, UnknownFieldSet* unknown,
+                        const char* func, const char* file, int line) {
+  fprintf(stderr, "%s:Pushing unknown tag 64=%llu 32=%d (caller=%s:%s:%d)\n",
+          __func__, (unsigned long long)val, static_cast<int32_t>(val), func,
+          file, line);
   unknown->AddVarint(num, val);
 }
 inline void WriteLengthDelimited(uint32_t num, absl::string_view val,

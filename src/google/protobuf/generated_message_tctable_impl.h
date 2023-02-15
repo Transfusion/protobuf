@@ -559,6 +559,7 @@ class PROTOBUF_EXPORT TcParser final {
   static const char* Error(PROTOBUF_TC_PARAM_NO_DATA_DECL);
 
   static const char* FastUnknownEnumFallback(PROTOBUF_TC_PARAM_DECL);
+  static const char* MpUnknownEnumFallback(PROTOBUF_TC_PARAM_DECL);
 
   class ScopedArenaSwap;
 
@@ -573,6 +574,7 @@ class PROTOBUF_EXPORT TcParser final {
 
   template <typename UnknownFieldsT>
   static void WriteVarintToUnknown(MessageLite* msg, int number, int value) {
+    fprintf(stderr, "%s:Pushing unknown tag 32=%d\n", __func__, value);
     internal::WriteVarint(
         number, value,
         msg->_internal_metadata_.mutable_unknown_fields<UnknownFieldsT>());
@@ -667,8 +669,8 @@ class PROTOBUF_EXPORT TcParser final {
       const char* ptr, Arena* arena, SerialArena* serial_arena,
       ParseContext* ctx, RepeatedPtrField<std::string>& field);
 
-  static void UnknownPackedEnum(MessageLite* msg, const TcParseTableBase* table,
-                                uint32_t tag, int32_t enum_value);
+  static void AddUnknownEnum(MessageLite* msg, const TcParseTableBase* table,
+                             uint32_t tag, int32_t enum_value);
 
   // Mini field lookup:
   static const TcParseTableBase::FieldEntry* FindFieldEntry(

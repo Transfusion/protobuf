@@ -74,7 +74,10 @@ PROTOBUF_EXPORT void WriteVarint(uint32_t num, uint64_t val, std::string* s);
 PROTOBUF_EXPORT void WriteLengthDelimited(uint32_t num, absl::string_view val,
                                           std::string* s);
 // Inline because it is just forwarding to s->WriteVarint
-inline void WriteVarint(uint32_t num, uint64_t val, UnknownFieldSet* s);
+inline void WriteVarint(uint32_t num, uint64_t val, UnknownFieldSet* s,
+                        const char* func = __builtin_FUNCTION(),
+                        const char* file = __builtin_FILE(),
+                        int line = __builtin_LINE());
 inline void WriteLengthDelimited(uint32_t num, absl::string_view val,
                                  UnknownFieldSet* s);
 
