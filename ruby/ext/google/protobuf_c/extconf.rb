@@ -12,12 +12,6 @@ else
   $CFLAGS += " -std=gnu99 -O3 -DNDEBUG"
 end
 
-
-if RUBY_PLATFORM =~ /linux/
-  # Instruct the linker to point memcpy calls at our __wrap_memcpy wrapper.
-  $LDFLAGS += " -Wl,-wrap,memcpy"
-end
-
 $VPATH << "$(srcdir)/third_party/utf8_range"
 $INCFLAGS << "$(srcdir)/third_party/utf8_range"
 
